@@ -2,12 +2,12 @@ import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { register, handleSubmit } = useForm({
     shouldUseNativeValidation: true,
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -91,6 +91,17 @@ export default function SignIn() {
                 </span>
                 Sign in
               </button>
+            </div>
+            <div>
+              <p className="mt-2 text-center text-sm text-gray-600">
+                You don't have an account yet?{" "}
+                <a
+                  href="sign-up"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Sign up
+                </a>
+              </p>
             </div>
           </form>
         </div>
