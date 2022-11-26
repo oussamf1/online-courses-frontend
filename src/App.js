@@ -6,6 +6,7 @@ import SignInPAge from "./pages/auth_page";
 import SignUpPage from "./components/signup_form";
 import Dashboard_Page from "./pages/Dashboard_page";
 import Courses from "./components/courses";
+import CouseOverview from "./components/course_overview";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/sign-up" element={<SignUpPage />}></Route>
           <Route path="/dashboard" element={<Dashboard_Page />}></Route>
           <Route path="/courses" element={<Courses />}></Route>
+          <Route path="/course/:id" element={<CouseOverview />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

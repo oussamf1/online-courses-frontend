@@ -10,6 +10,18 @@ export async function getCourses() {
     console.log(error.response.data.message);
   }
 }
+export async function getCourse(id) {
+  try {
+    console.log("here");
+    const course = await axios.get(`${backEndURl}courses/${id}`, {
+      withCredentials: true,
+    });
+    return course;
+  } catch (error) {
+    console.log(error.response.data.message);
+  }
+}
+
 export async function addCourse(data) {
   axios.post(`${backEndURl}courses/add`, data);
 }

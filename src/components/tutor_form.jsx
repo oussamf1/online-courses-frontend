@@ -2,18 +2,19 @@ import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useForm } from "react-hook-form";
 import { addTutor } from "../API/availability";
 
-export default function TutorForm() {
+export default function TutorForm({ setNotification }) {
   const {
     register,
     formState: { errors },
     handleSubmit,
-    watch,
-    getValues,
   } = useForm({
     shouldUseNativeValidation: true,
   });
-  const onSubmit = (data) => {
-    addTutor(data);
+  const onSubmit = async (tutor) => {
+    console.log(tutor);
+    const data = await addTutor(tutor);
+    const { message } = data;
+    setNotification(message);
   };
   return (
     <>
@@ -21,19 +22,38 @@ export default function TutorForm() {
         <input type="hidden" name="remember" defaultValue="true" />
         <div className="-space-y-px rounded-md shadow-sm">
           <div>
-            <label htmlFor="tutor" className="sr-only">
-              Tutor
+            <label htmlFor="name" className="sr-only">
+              Name
             </label>
             <input
-              id="tutor"
-              name="tutor"
-              type="tutor"
-              autoComplete="tutor"
+              id="name"
+              name="name"
+              type="name"
+              autoComplete="name"
               required
               className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              placeholder="Tutor"
-              {...register("tutor", {
+              placeholder="name"
+              {...register("name", {
                 required: "Please enter the tutor name",
+              })}
+            />
+          </div>
+          <br></br>
+
+          <div>
+            <label htmlFor="email" className="sr-only">
+              email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder="email"
+              {...register("email", {
+                required: "Please enter the tutor email ",
               })}
             />
           </div>

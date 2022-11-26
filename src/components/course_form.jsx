@@ -3,7 +3,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { backEndURl } from "../API/constant";
 
-export default function CourseForm() {
+export default function CourseForm({ setNotification }) {
   const {
     register,
     formState: { errors },
@@ -11,8 +11,10 @@ export default function CourseForm() {
   } = useForm({
     shouldUseNativeValidation: true,
   });
-  const onSubmit = (data) => {
-    axios.post(`${backEndURl}courses/add`, data);
+  const onSubmit = async (course) => {
+    const { data } = await axios.post(`${backEndURl}courses/add`, course);
+    const { message } = data;
+    setNotification(message);
   };
 
   return (
@@ -52,6 +54,24 @@ export default function CourseForm() {
               placeholder="Description"
               {...register("description", {
                 required: "Please enter the course description",
+              })}
+            />
+          </div>
+          <br></br>
+          <div>
+            <label htmlFor="url" className="sr-only">
+              Image Url
+            </label>
+            <input
+              id="url"
+              name="url"
+              type="url"
+              autoComplete="url"
+              required
+              className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder="url"
+              {...register("url", {
+                required: "Please enter the image url",
               })}
             />
           </div>

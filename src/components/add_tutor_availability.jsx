@@ -2,7 +2,7 @@ import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { getTutors } from "../API/availability";
+import { addDate, getTutors } from "../API/availability";
 
 export default function AvailabilityForm() {
   const [tutors, setTutors] = useState([]);
@@ -17,15 +17,18 @@ export default function AvailabilityForm() {
   } = useForm({
     shouldUseNativeValidation: true,
   });
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const response = await addDate(data);
+    const { message } = response;
+    alert(message);
   };
   useEffect(() => {
     async function fetchData() {
       try {
         const { data } = await getTutors();
-        console.log(data.tutors);
-        setTutors(data.tutors);
+        const { tutors } = data;
+        console.log(data);
+        setTutors(tutors);
         setIsFetched(true);
       } catch (error) {
         console.log(error.response.data.message);
@@ -54,18 +57,17 @@ export default function AvailabilityForm() {
                 required: "Please enter the tutor name",
               })}
             >
-              {isFetched &&
-                tutors.map((tutor) => {
-                  <option value={tutor.tutor}>{tutor.tutor}</option>;
-                })}
+              {tutors.map((tutor) => (
+                <option value={tutor.name}>{tutor.name}</option>
+              ))}
             </select>
           </div>
           <br></br>
           <div>
             <label htmlFor="day" className="sr-only">
-              Day
+              day{" "}
             </label>
-            <input
+            <select
               id="day"
               name="day"
               type="day"
@@ -74,9 +76,17 @@ export default function AvailabilityForm() {
               className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="day"
               {...register("day", {
-                required: "Please enter the Day",
+                required: "Please enter the day",
               })}
-            />
+            >
+              <option value="monday">Monday</option>
+              <option value="tuesday">Tuesday</option>{" "}
+              <option value="wednesday">Wednesday</option>{" "}
+              <option value="thursday">Thursday</option>{" "}
+              <option value="friday">Friday</option>{" "}
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
           </div>
           <br></br>
           <div>
