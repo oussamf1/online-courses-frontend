@@ -28,3 +28,29 @@ export async function addDate(availability) {
   );
   return data;
 }
+export async function assignCourse(tutor, course) {
+  const { data } = await axios.post(`${backEndURl}availability/addCourse`, {
+    tutor,
+    course,
+  });
+  return data;
+}
+export async function getCoursesAvailability(course_id) {
+  const { data } = await axios.post(
+    `${backEndURl}availability/getCourseAvailability`,
+    {
+      course_id,
+    }
+  );
+  return data;
+}
+
+export async function addOrder(orderData, course_id) {
+  const { data } = await axios.post(
+    `${backEndURl}availability/getCourseAvailability`,
+    {
+      course_id,
+    }
+  );
+  return data;
+}

@@ -1,7 +1,11 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useForm } from "react-hook-form";
+import { sign_up } from "../API/users";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
@@ -11,8 +15,14 @@ export default function SignUp() {
   } = useForm({
     shouldUseNativeValidation: true,
   });
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    const { firstName, lastName, email, password, first } = data;
+    const response = await sign_up(firstName, lastName, email, password);
+    if (response.data.status == 200) {
+      alert("Account Created");
+      navigate("/sign-in");
+    }
   };
 
   return (
@@ -38,36 +48,36 @@ export default function SignUp() {
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
-                <label htmlFor="first-name" className="sr-only">
+                <label htmlFor="firstName" className="sr-only">
                   First Name
                 </label>
                 <input
-                  id="first-name"
-                  name="first-name"
-                  type="first-name"
-                  autoComplete="first-name"
+                  id="firstName"
+                  name="firstName"
+                  type="firstName"
+                  autoComplete="firstName"
                   required
                   className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="First name"
-                  {...register("first-name", {
+                  {...register("firstName", {
                     required: "Please enter your first name",
                   })}
                 />
               </div>
               <br></br>
               <div>
-                <label htmlFor="last-name" className="sr-only">
+                <label htmlFor="lastName" className="sr-only">
                   Last Name
                 </label>
                 <input
-                  id="last-name"
-                  name="last-name"
-                  type="last-name"
-                  autoComplete="last-name"
+                  id="lastName"
+                  name="lastName"
+                  type="lastName"
+                  autoComplete="lastName"
                   required
                   className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Last name"
-                  {...register("last-name", {
+                  {...register("lastName", {
                     required: "Please enter your last name",
                   })}
                 />

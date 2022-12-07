@@ -3,15 +3,21 @@ import AvailabilityForm from "./add_tutor_availability";
 import CourseForm from "./course_form";
 import Tutors from "./tutors_list";
 import TutorForm from "./tutor_form";
+import AssignCourse from "./assign_course_form";
 export default function Admin_Tabs() {
   const [showAddCourse, setShowCourse] = useState(false);
   const [showAddTutor, setshowAddTutor] = useState(false);
   const [showAddAvailability, setShowAddAvailability] = useState(false);
   const [showTutors, setShowTutors] = useState(false);
+  const [showAssignCourse, setAssignCourse] = useState(false);
   const [notification, setNotification] = useState("");
   const activateAddCourse = () => {
     resetStatus();
     setShowCourse(true);
+  };
+  const assignCourseToTutor = () => {
+    resetStatus();
+    setAssignCourse(true);
   };
   const activateAddTutor = () => {
     resetStatus();
@@ -25,11 +31,16 @@ export default function Admin_Tabs() {
     resetStatus();
     setShowTutors(true);
   };
+  const activateAssignCourse = () => {
+    resetStatus();
+    setAssignCourse(true);
+  };
   const resetStatus = () => {
     setshowAddTutor(false);
     setShowAddAvailability(false);
     setShowCourse(false);
     setShowTutors(false);
+    setAssignCourse(false);
   };
   return (
     <div class="container mx-auto p-20">
@@ -113,6 +124,24 @@ export default function Admin_Tabs() {
                   >
                     Tutors List
                   </button>
+                  <button
+                    onClick={assignCourseToTutor}
+                    type="button"
+                    class="
+        text-left
+        px-6
+        py-2
+        border-b border-gray-200
+        w-full
+        hover:bg-gray-100 hover:text-gray-500
+        focus:outline-none focus:ring-0 focus:bg-gray-200 focus:text-gray-600
+        transition
+        duration-500
+        cursor-pointer
+      "
+                  >
+                    Assign Course
+                  </button>
                 </div>
               </div>
             </div>
@@ -132,6 +161,11 @@ export default function Admin_Tabs() {
             </div>
             <div> {showTutors && <Tutors />} </div>
             <div>{showAddAvailability && <AvailabilityForm />}</div>
+            <div>
+              {showAssignCourse && (
+                <AssignCourse setNotification={setNotification} />
+              )}
+            </div>
           </div>
         </div>{" "}
       </div>

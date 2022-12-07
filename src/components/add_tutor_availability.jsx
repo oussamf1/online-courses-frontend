@@ -12,8 +12,6 @@ export default function AvailabilityForm() {
     register,
     formState: { errors },
     handleSubmit,
-    watch,
-    getValues,
   } = useForm({
     shouldUseNativeValidation: true,
   });

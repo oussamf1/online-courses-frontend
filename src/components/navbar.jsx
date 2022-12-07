@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { isAuth } from "../API/users";
 const navigation = [
   { name: "Dashboard", href: "dashboard", current: false },
   { name: "Courses", href: "courses", current: false },
@@ -13,6 +15,22 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const [isAuthentificated, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await isAuth();
+        const { loginStatus } = data;
+        console.log(loginStatus);
+        setIsAuth(loginStatus);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -63,14 +81,23 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <Link to="/sign-in">
-                {" "}
-                <button className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              {!isAuthentificated && (
+                <Link to="/sign-in">
+                  {" "}
+                  <button className="group relative flex  justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    {" "}
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
+                    Sign in
+                  </button>
+                </Link>
+              )}
+              {isAuthentificated && (
+                <button className="group relative flex  justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                   {" "}
                   <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
-                  Sign in
+                  Sign out
                 </button>
-              </Link>
+              )}
             </div>
           </div>
 
