@@ -16,6 +16,7 @@ export default function AvailabilityForm() {
     shouldUseNativeValidation: true,
   });
   const onSubmit = async (data) => {
+    console.log(data);
     const response = await addDate(data);
     const { message } = response;
     alert(message);
