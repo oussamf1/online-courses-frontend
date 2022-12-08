@@ -30,3 +30,13 @@ export async function getOrders() {
     console.log(error.response.data.message);
   }
 }
+export async function getAllOrders() {
+  try {
+    const orders = await axios.get(`${backEndURl}order/all`, {
+      withCredentials: true,
+    });
+    return orders;
+  } catch (error) {
+    console.log(error.response.data.message);
+  }
+}

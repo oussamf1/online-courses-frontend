@@ -17,6 +17,17 @@ export async function login(email, password) {
     console.log(error.response.data.message);
   }
 }
+export async function sign_out() {
+  try {
+    const response = await axios.get(`${backEndURl}users/sign-out`, {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function sign_up(firstName, lastName, email, password) {
   try {
     const response = await axios.post(

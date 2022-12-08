@@ -55,9 +55,6 @@ export default function PurchaseForm() {
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt="Your Company"
             />
-            <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Purchase{" "}
-            </h2>
           </div>
           <form
             className="mt-8 space-y-6"

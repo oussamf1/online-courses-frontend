@@ -4,13 +4,17 @@ import CourseForm from "./course_form";
 import Tutors from "./tutors_list";
 import TutorForm from "./tutor_form";
 import AssignCourse from "./assign_course_form";
+import OrdersList from "./order_list";
 export default function Admin_Tabs() {
   const [showAddCourse, setShowCourse] = useState(false);
   const [showAddTutor, setshowAddTutor] = useState(false);
   const [showAddAvailability, setShowAddAvailability] = useState(false);
   const [showTutors, setShowTutors] = useState(false);
   const [showAssignCourse, setAssignCourse] = useState(false);
+  const [showOrders, setShowOrders] = useState(false);
+
   const [notification, setNotification] = useState("");
+
   const activateAddCourse = () => {
     resetStatus();
     setShowCourse(true);
@@ -35,7 +39,12 @@ export default function Admin_Tabs() {
     resetStatus();
     setAssignCourse(true);
   };
+  const activateShowOrders = () => {
+    resetStatus();
+    setShowOrders(true);
+  };
   const resetStatus = () => {
+    setShowOrders(false);
     setshowAddTutor(false);
     setShowAddAvailability(false);
     setShowCourse(false);
@@ -142,6 +151,24 @@ export default function Admin_Tabs() {
                   >
                     Assign Course
                   </button>
+                  <button
+                    onClick={activateShowOrders}
+                    type="button"
+                    class="
+        text-left
+        px-6
+        py-2
+        border-b border-gray-200
+        w-full
+        hover:bg-gray-100 hover:text-gray-500
+        focus:outline-none focus:ring-0 focus:bg-gray-200 focus:text-gray-600
+        transition
+        duration-500
+        cursor-pointer
+      "
+                  >
+                    Show Orders
+                  </button>
                 </div>
               </div>
             </div>
@@ -166,6 +193,7 @@ export default function Admin_Tabs() {
                 <AssignCourse setNotification={setNotification} />
               )}
             </div>
+            <div>{showOrders && <OrdersList />}</div>
           </div>
         </div>{" "}
       </div>

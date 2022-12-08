@@ -44,7 +44,7 @@ export default function AssignCourse({ setNotification }) {
     const { course, tutor } = formData;
     console.log(course);
     console.log(tutor);
-    const { message } = await assignCourse(course, tutor);
+    const { message } = await assignCourse(tutor, course);
     setNotification(message);
   };
 

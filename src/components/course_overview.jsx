@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { getCourse } from "../API/courses";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function CourseOverview() {
   const [course, setCourse] = useState({});
@@ -36,12 +36,14 @@ export default function CourseOverview() {
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
             <p className="text-3xl tracking-tight text-gray-900">
-              {course.price}
+              {course.price}USD
             </p>
-            <img
-              src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-              className="object-contain  object-center"
-            />
+            <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+              <img
+                src={course.url}
+                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+              />
+            </div>
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pb-16 lg:pr-8">
@@ -55,12 +57,14 @@ export default function CourseOverview() {
             </div>
             <div className="mt-10">
               <div className="flex justify-center my-12">
-                <button
-                  type="submit"
-                  className=" my-5 w-48 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Purchase{" "}
-                </button>
+                <Link to={`/checkout/${course._id}`}>
+                  <button
+                    type="submit"
+                    className=" my-5 w-48 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    Purchase{" "}
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

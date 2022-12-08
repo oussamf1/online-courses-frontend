@@ -1,19 +1,39 @@
 import { useState, useEffect } from "react";
-import { getOrders } from "../API/order";
+import { getAllOrders, getOrders } from "../API/order";
+import { checkIsAdmin } from "../API/users";
 export default function OrdersList() {
   const [orders, setOrders] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
+    async function fetchIsAdmin() {
+      try {
+        const { data } = await checkIsAdmin();
+        const { isAdmin } = data;
+        console.log(isAdmin);
+        setIsAdmin(isAdmin);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     async function fetchOrders() {
       try {
-        const { data } = await getOrders();
-        const { orders } = data;
-        setOrders(orders);
+        if (isAdmin) {
+          const { data } = await getAllOrders();
+          const { orders } = data;
+          setOrders(orders);
+        } else {
+          const { data } = await getOrders();
+          const { orders } = data;
+          setOrders(orders);
+        }
         console.log(orders);
       } catch (error) {
         console.log(error.response.data.message);
       }
     }
     fetchOrders();
+    fetchIsAdmin();
   }, []);
 
   return (
@@ -62,19 +82,19 @@ export default function OrdersList() {
               <tbody className="divide-y divide-gray-200">
                 {orders.map((order) => (
                   <tr>
-                    <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap text-left">
                       {order.studentName}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap text-left">
                       {order.user_email}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-left">
                       {order.course}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-left">
                       {order.courseDate}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-right">
                       {order.finalPrice}
                     </td>
                   </tr>

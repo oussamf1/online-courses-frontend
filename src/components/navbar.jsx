@@ -3,11 +3,12 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { isAuth } from "../API/users";
+import { isAuth, sign_out } from "../API/users";
+import { useNavigate } from "react-router-dom";
 const navigation = [
-  { name: "Dashboard", href: "dashboard", current: false },
-  { name: "Courses", href: "courses", current: false },
-  { name: "Curriculm", href: "curriculm", current: false },
+  { name: "Dashboard", href: "/dashboard", current: true },
+  { name: "Courses", href: "/courses", current: true },
+  { name: "Curriculm", href: "/curriculm", current: true },
 ];
 
 function classNames(...classes) {
@@ -15,8 +16,15 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [isAuthentificated, setIsAuth] = useState(false);
+  const navigate = useNavigate();
 
+  const [isAuthentificated, setIsAuth] = useState(false);
+  async function logout() {
+    const { data } = await sign_out();
+    if (data.success) {
+      navigate("/sign-in");
+    }
+  }
   useEffect(() => {
     async function fetchData() {
       try {
@@ -92,7 +100,10 @@ export default function Navbar() {
                 </Link>
               )}
               {isAuthentificated && (
-                <button className="group relative flex  justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <button
+                  onClick={logout}
+                  className="group relative flex  justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
                   {" "}
                   <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
                   Sign out

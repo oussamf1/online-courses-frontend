@@ -64,7 +64,7 @@ export default function Tutors() {
                       {tutor.name}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                      jonne62@gmail.com
+                      {tutor.email}
                     </td>
                     <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                       <a
